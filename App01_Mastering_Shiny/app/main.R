@@ -1,33 +1,22 @@
 box::use(
-  shiny[fluidPage, moduleServer, NS],
-  shiny[reactive, renderPrint, renderTable,
-        selectInput, tableOutput, verbatimTextOutput],
+  app/view/ch1a,
+  app/view/ch1a_ex1,
+  app/view/ch1a_ex4,
+  app/view/ch1a_ex5,
+)
+box::use(
+  shiny[moduleServer, NS],
 )
 
 #' @export
 ui <- function(id) {
   ns <- NS(id)
-  fluidPage(
-    selectInput(ns("dataset"), label = "Dataset", choices = ls("package:datasets")),
-    verbatimTextOutput(ns("summary")),
-    tableOutput(ns("table"))
-  )
+  ch1a_ex5$ui(ns(id))
 }
 
 #' @export
 server <- function(id) {
   moduleServer(id, function(input, output, session) {
-    # Reactive expression
-    dataset <- reactive({
-      get(input$dataset, "package:datasets")
-    })
-
-    output$summary <- renderPrint({
-      summary(dataset())
-    })
-
-    output$table <- renderTable({
-      dataset()
-    })
+  ch1a_ex5$server(id)
   })
 }
