@@ -7,3 +7,6 @@
 
 # Render README
 README.Rmd
+
+# RStudio files
+*.Rproj.user/
