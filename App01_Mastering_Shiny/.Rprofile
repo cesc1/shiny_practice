@@ -16,3 +16,6 @@ if (nzchar(system.file(package = "box.lsp"))) {
     )
   )
 }
+
+# Autoreload
+options(shiny.autoreload = TRUE)
