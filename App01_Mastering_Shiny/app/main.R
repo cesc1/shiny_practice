@@ -3,6 +3,8 @@ box::use(
   app/view/ch1a_ex1,
   app/view/ch1a_ex4,
   app/view/ch1a_ex5,
+  app/view/ch1b,
+  app/view/ch1b_ex1,
 )
 box::use(
   shiny[moduleServer, NS],
@@ -11,12 +13,12 @@ box::use(
 #' @export
 ui <- function(id) {
   ns <- NS(id)
-  ch1a_ex5$ui(ns(id))
+  ch1b$ui(ns(id))
 }
 
 #' @export
 server <- function(id) {
   moduleServer(id, function(input, output, session) {
-  ch1a_ex5$server(id)
+  ch1b$server(id)
   })
 }
