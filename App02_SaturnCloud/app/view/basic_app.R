@@ -1,13 +1,11 @@
 box::use(
   app/logic/helper_functions[data, pet_type, fix_name,
                              plot_value_basic, plot_value],
-  app/view/theme[my_theme],
 )
 
 box::use(
-  shiny[bootstrapPage, moduleServer, NS, h1, h3, HTML],
-  shiny[bootstrapPage, titlePanel,
-        sidebarPanel, mainPanel],
+  shiny[moduleServer, NS, h1, h3, HTML, tagList],
+  shiny[bootstrapPage, titlePanel, sidebarPanel, mainPanel],
   #UI
   shiny[div, textInput, actionButton, plotOutput, uiOutput],
   # Server
@@ -19,8 +17,7 @@ box::use(
 #' @export
 ui <- function(id) {
   ns <- NS(id)
-  bootstrapPage(
-    theme = my_theme,
+    tagList(
       div(class = "container bg-light my-5 py-3",
           div(class = "row",
               div(class = "col-6",
@@ -35,8 +32,8 @@ ui <- function(id) {
                   uiOutput(ns("text"))
               ),
           ),
-      )  
-  )
+      )
+    )
 }
 
 #' @export
@@ -69,7 +66,10 @@ server <- function(id) {
         h3("Please select a valid name")
       } else if (!is.finite(results()$p)) {
         h3("No pets in the data with that name")
-      } else {
+      } else if (results()$type == "tie") {
+        h3(glue::glue("It's a tie! ({results()$cats} - {results()$dogs})"))
+      }
+      else {
         if (results()$type == guess()) {
           value <- "correct!"
           value_style <- "correct-value"

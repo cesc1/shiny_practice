@@ -1,15 +1,19 @@
 box::use(
   app/view/basic_app,
+  app/view/theme[my_theme],
 )
 box::use(
-  shiny[moduleServer, NS],
+  shiny[bootstrapPage, moduleServer, NS],
 )
 
 
 #' @export
 ui <- function(id) {
   ns <- NS(id)
-  basic_app$ui(ns(id)) 
+  bootstrapPage(
+    theme = my_theme,
+    basic_app$ui(ns(id))
+  )
 }
 
 #' @export
