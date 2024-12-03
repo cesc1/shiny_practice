@@ -1,10 +1,8 @@
 box::use(
   # Basic
-  shiny[moduleServer, NS],
+  shiny[moduleServer, NS, tagList],
   # UI input
-  shiny[fluidPage, textInput, numericInput],
-  # UI output
-  shiny[textOutput],
+  shiny[textInput, numericInput, textOutput],
   # Server
   shiny[renderText],
 )
@@ -12,7 +10,7 @@ box::use(
 #' @export
 ui <- function(id) {
   ns <- NS(id)
-  fluidPage(
+  tagList(
     textInput(ns("name"), "What's your name?"),
     numericInput(ns("age"), "How old are you?", value = NA),
     

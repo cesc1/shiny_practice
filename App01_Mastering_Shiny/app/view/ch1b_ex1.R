@@ -1,12 +1,12 @@
 box::use(
-  shiny[moduleServer, NS],
-  shiny[fluidPage, h2, textInput, sliderInput, selectizeInput],
+  shiny[moduleServer, NS, tagList],
+  shiny[h2, textInput, sliderInput, selectizeInput],
 )
 
 #' @export
 ui <- function(id) {
   ns <- NS(id)
-  fluidPage(
+  tagList(
     h2("Box with placeholder"),
     textInput(ns("name"), label = "", value = "Your name"),
     

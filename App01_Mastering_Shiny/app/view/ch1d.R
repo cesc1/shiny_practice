@@ -7,7 +7,7 @@ box::use(
 box::use(
   shiny[moduleServer, NS],
   # Layout
-  shiny[fluidPage, fluidRow, column],
+  shiny[tagList, fluidRow, column],
   # UI
   shiny[selectInput, tableOutput, plotOutput, actionButton, textOutput],
   # Server
@@ -20,7 +20,7 @@ box::use(
 ui <- function(id) {
   ns <- NS(id)
   
-  fluidPage(
+  tagList(
     fluidRow(
       column(8,
         selectInput(ns("code"), "Product", choices = prod_codes)

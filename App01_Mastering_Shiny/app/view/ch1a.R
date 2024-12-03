@@ -1,5 +1,5 @@
 box::use(
-  shiny[fluidPage, moduleServer, NS],
+  shiny[tagList, moduleServer, NS],
   shiny[reactive, renderPrint, renderTable,
         selectInput, tableOutput, verbatimTextOutput],
 )
@@ -7,7 +7,7 @@ box::use(
 #' @export
 ui <- function(id) {
   ns <- NS(id)
-  fluidPage(
+  tagList(
     selectInput(ns("dataset"), label = "Dataset", choices = ls("package:datasets")),
     verbatimTextOutput(ns("summary")),
     tableOutput(ns("table"))

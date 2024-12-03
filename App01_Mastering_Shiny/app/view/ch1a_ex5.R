@@ -1,8 +1,8 @@
 box::use(
   # Basic
-  shiny[moduleServer, NS],
+  shiny[moduleServer, NS, tagList],
   # UI input
-  shiny[fluidPage, selectInput],
+  shiny[selectInput],
   # UI output
   shiny[verbatimTextOutput, plotOutput],
   # Server
@@ -15,7 +15,7 @@ box::use(
 ui <- function(id) {
   ns <- NS(id)
   datasets <- c("economics", "faithfuld", "seals")
-  ui <- fluidPage(
+  ui <- tagList(
     selectInput(ns("dataset"), "Dataset", choices = datasets),
     verbatimTextOutput(ns("summary")),
     plotOutput(ns("plot"))

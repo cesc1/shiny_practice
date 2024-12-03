@@ -1,8 +1,8 @@
 box::use(
   # Basic
-  shiny[moduleServer, NS],
+  shiny[moduleServer, NS, tagList],
   # UI input
-  shiny[fluidPage, sliderInput],
+  shiny[sliderInput],
   # UI output
   shiny[textOutput],
   # Server
@@ -12,7 +12,7 @@ box::use(
 #' @export
 ui <- function(id) {
   ns <- NS(id)
-  fluidPage(
+  tagList(
     sliderInput(ns("x"),
                 label = "If x is",
                 min = 1,

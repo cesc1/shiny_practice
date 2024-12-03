@@ -2,8 +2,8 @@ box::use(
   app/logic/utils[freqpoly, t_test]
 )
 box::use(
-  shiny[moduleServer, NS],
-  shiny[h2, fluidPage, fluidRow, column, numericInput, sliderInput, actionButton, textInput],
+  shiny[moduleServer, NS, tagList],
+  shiny[h2, fluidRow, column, numericInput, sliderInput, actionButton, textInput],
   shiny[plotOutput, verbatimTextOutput, textOutput],
   shiny[bindEvent, reactive, reactiveTimer, renderPlot, renderText, observe],
   stats[rnorm, rpois],
@@ -12,7 +12,7 @@ box::use(
 #' @export
 ui <- function(id) {
   ns <- NS(id)
-  fluidPage(
+  tagList(
     h2("1. Reactive expressions"),
     fluidRow(
       column(4,

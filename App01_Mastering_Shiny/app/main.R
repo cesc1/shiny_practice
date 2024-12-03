@@ -9,13 +9,15 @@ box::use(
   app/view/ch1d,
 )
 box::use(
-  shiny[moduleServer, NS],
+  shiny[moduleServer, NS, fluidPage],
 )
 
 #' @export
 ui <- function(id) {
   ns <- NS(id)
-  ch1d$ui(ns(id))
+  fluidPage(
+    ch1d$ui(ns(id))
+  )
 }
 
 #' @export
