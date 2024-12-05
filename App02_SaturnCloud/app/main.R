@@ -12,13 +12,13 @@ ui <- function(id) {
   ns <- NS(id)
   bootstrapPage(
     theme = my_theme,
-    basic_app$ui(ns(id))
+    basic_app$ui(ns("basic_app"))
   )
 }
 
 #' @export
 server <- function(id) {
   moduleServer(id, function(input, output, session) {
-    basic_app$server(id)
+    basic_app$server("basic_app")
   })
 }

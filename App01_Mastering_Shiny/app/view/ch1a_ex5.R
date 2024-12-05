@@ -1,4 +1,7 @@
 box::use(
+  app/data/load_ggplot_data[economics, faithfuld, seals],
+)
+box::use(
   # Basic
   shiny[moduleServer, NS, tagList],
   # UI input
@@ -7,8 +10,6 @@ box::use(
   shiny[verbatimTextOutput, plotOutput],
   # Server
   shiny[reactive, renderPrint, renderPlot],
-  # Other
-  ggplot2[economics, faithfuld, seals]
 )
 
 #' @export
@@ -26,7 +27,13 @@ ui <- function(id) {
 server <- function(id) {
   moduleServer(id, function(input, output, session) {
     dataset <- reactive({
-      get(input$dataset, "package:ggplot2")
+      if (input$dataset == "economics") {
+        economics
+      } else if (input$dataset == "faithfuld") {
+        faithfuld
+      } else {
+        seals
+      }
     })
     output$summary <- renderPrint({
       summary(dataset())
