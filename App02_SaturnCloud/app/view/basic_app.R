@@ -1,6 +1,7 @@
 box::use(
   app/logic/helper_functions[data, pet_type, fix_name,
                              plot_value_basic, plot_value],
+  app/view/theme[textInput_max_width]
 )
 
 box::use(
@@ -10,7 +11,7 @@ box::use(
   shiny[div, textInput, actionButton, plotOutput, uiOutput],
   # Server
   shiny[isolate, reactive, reactiveVal, observe, 
-        renderPlot, renderUI, bindEvent],
+        renderPlot, renderUI, bindEvent, req],
   glue[glue]
 )
 
@@ -21,7 +22,9 @@ ui <- function(id) {
       div(class = "container bg-light my-5 py-3",
           div(class = "row",
               div(class = "col-6",
-                  textInput(ns("name"), "Pet name"),
+                  # Text input
+                  #textInput(ns("name"), "Pet name"),
+                  textInput_max_width(ns("name")),
                   div(class = "d-grid gap-2",
                       actionButton(ns("guess_cat"), "Guess Cats", class = "btn-primary text-white"),
                       actionButton(ns("guess_dog"), "Guess Dogs", class = "btn-primary text-white")
@@ -62,6 +65,7 @@ server <- function(id) {
     })
     
     output$text <- renderUI({
+      req(results())
       if(is.null(results())) {
         h3("Please select a valid name")
       } else if (!is.finite(results()$p)) {
