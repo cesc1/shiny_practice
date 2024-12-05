@@ -24,7 +24,14 @@ ui <- function(id) {
         nav_panel("ex1", ch1a_ex1$ui(ns("ch1a_ex1"))),
         nav_panel("ex4", ch1a_ex4$ui(ns("ch1a_ex4"))),
         nav_panel("ex5", ch1a_ex5$ui(ns("ch1a_ex5")))
-      )
+      ),
+      nav_menu(
+        "Ch2",
+        nav_panel("Theory", ch1b$ui(ns("ch1b"))),
+        nav_panel("ex1", ch1b_ex1$ui(ns("ch1b_ex1")))
+      ),
+      nav_panel("Ch3", ch1c$ui(ns("ch1c"))),
+      nav_panel("Ch4", ch1d$ui(ns("ch1d")))
     )
   )
 }
@@ -36,5 +43,9 @@ server <- function(id) {
     ch1a_ex1$server("ch1a_ex1")
     ch1a_ex4$server("ch1a_ex4")
     ch1a_ex5$server("ch1a_ex5")
+    ch1b$server("ch1b")
+    ch1b_ex1$server("ch1b_ex1")
+    ch1c$server("ch1c")
+    ch1d$server("ch1d")
   })
 }
