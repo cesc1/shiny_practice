@@ -1,6 +1,6 @@
 box::use(
-  shiny[moduleServer, NS, tagList],
-  shiny[h2, textInput, sliderInput, selectizeInput],
+  shiny[moduleServer, NS, tagList, observe],
+  shiny[h2, textInput, sliderInput, selectizeInput, updateSelectizeInput],
 )
 
 #' @export
@@ -25,15 +25,21 @@ ui <- function(id) {
                 step = 5,
                 animate = TRUE),
     
-    h2("Long selectable"),
-    selectizeInput("long_box", "Long choices", 0:1000,
-                   options = list(maxOptions = 5))
+    h2("Long selectable, using server-side selectize"),
+    selectizeInput(ns("long_box"), "Choose an item:", 
+                   choices = NULL,
+                   multiple = FALSE)
   )
 }
 
 #' @export
 server <- function(id) {
   moduleServer(id, function(input, output, session) {
-
+    updateSelectizeInput(
+      session,
+      inputId = "long_box",
+      choices = 0:1000,
+      server = TRUE
+    )
   })
 }
