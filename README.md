@@ -1,12 +1,12 @@
 Shiny App Practice
 ================
 
-# Goal
+## Goal
 
 Having a safe space to practice/try new tools for
 [Shiny](https://shiny.posit.co/) apps.
 
-# Apps:
+## Apps:
 
 - **App01**: Examples from [Mastering
   Shiny](https://mastering-shiny.org/index.html), remastered with
@@ -19,7 +19,7 @@ Having a safe space to practice/try new tools for
 
 - **App03:**
 
-# Resources
+## Resources
 
 - [Shiny documentation](https://shiny.posit.co/)
 - [Shiny awesome package

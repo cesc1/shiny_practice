@@ -6,7 +6,8 @@
 .RDataTmp
 
 # Render README
-README.Rmd
+*README.Rmd
+*img/
 
 # RStudio files
 *.Rproj.user/
