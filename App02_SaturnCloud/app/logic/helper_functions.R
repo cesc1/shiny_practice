@@ -1,30 +1,27 @@
 box::use(
   dplyr[filter],
-  ggplot2[ggplot, aes, geom_col, geom_line, coord_cartesian,
-          theme_void, theme, margin, dup_axis, scale_y_continuous, geom_rect,
-          element_text],
+  ggplot2[aes, coord_cartesian, geom_line, geom_rect, ggplot],
+  ggplot2[dup_axis, element_text, margin, scale_y_continuous, theme, theme_void],
+  glue[glue],
+  shiny[HTML, tags],
+  stringr[str_remove_all],
 )
 
-#' @export
-data <- readRDS("app/data/pet_data.rds")
-
-#' @export
 fix_name <- function(example_name) {
-  example_name |> 
-    tolower() |> 
-    stringr::str_remove_all("[^ \\.-[a-zA-Z]]") |> 
+  example_name |>
+    tolower() |>
+    str_remove_all("[^ \\.-[a-zA-Z]]") |>
     trimws()
 }
 
-#' @export
 pet_type <- function(pet_data, selected_name) {
-  results <- pet_data |> 
-    dplyr::filter(name == selected_name)
-  
+  results <- pet_data |>
+    filter(name == selected_name)
+
   cats <- sum(results$species == "cat")
   dogs <- sum(results$species == "dog")
   p <- cats / (cats + dogs)
-  
+
   if (is.infinite(p)) {
     type <- "name not found"
   } else if (cats > dogs) {
@@ -34,20 +31,18 @@ pet_type <- function(pet_data, selected_name) {
   } else {
     type <- "tie"
   }
-  
+
   list(cats = cats, dogs = dogs, p = p, type = type)
 }
 
 #' @export
-plot_value_basic <- function(results) {
-  if (is.null(results)) {
-    ggplot()
-  } else {
-    ggplot(data.frame(count = c(results$cats, results$dogs),
-                      type = c("cats", "dogs")),
-           aes(x = type, y = count)) +
-      geom_col()
+calc_input_data <- function(data, name) {
+  name_clean <- fix_name(name)
+  if (nchar(name_clean) > 0) {
+    result <- pet_type(data, name_clean)
+    return(result)
   }
+  return(NULL)
 }
 
 #' @export
@@ -57,7 +52,7 @@ plot_value <- function(results) {
   } else {
     p <- results$p
   }
-  
+
   plot <- ggplot(data = data.frame(x = p),
                  aes(xmin = x - 0.025, xmax = x + 0.025, ymin = -0.1, ymax = 0.1)) +
     geom_line(data = rbind(data.frame(x = seq(0, 1, 0.1), y = -0.05, group = 1:11),
@@ -81,4 +76,32 @@ plot_value <- function(results) {
     plot <- plot + geom_rect(fill = "#FF6622", alpha = 0.8)
   }
   plot
+}
+
+#' @export
+create_html_output <- function(input_data, clicked_button) {
+  if (is.null(input_data)) {
+    return(
+      tags$h3("Please select a valid name")
+    )
+  } else if (!is.finite(input_data$p)) {
+    return(
+      tags$h3("No pets in the data with that name")
+    )
+  } else if (input_data$type == "tie") {
+    return(
+      tags$h3(glue("It's a tie! ({input_data$cats} - {input_data$dogs})"))
+    )
+  } else {
+    if (input_data$type == clicked_button) {
+      value <- "correct!"
+      value_style <- "correct-value"
+    } else {
+      value <- "incorrect."
+      value_style <- "incorrect-value"
+    }
+    return(
+      HTML(glue("<h3>{clicked_button} is <span class = '{value_style}'>{value}</span></h3>"))
+    )
+  }
 }

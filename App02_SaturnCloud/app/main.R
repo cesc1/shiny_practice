@@ -1,10 +1,10 @@
 box::use(
   app/view/basic_app,
-  app/view/theme[my_theme, font_parkinsans, load_favicon],
+  app/view/theme[font_parkinsans, load_favicon, my_theme],
 )
 box::use(
-  shiny[bootstrapPage, moduleServer, NS],
   htmltools[tags],
+  shiny[bootstrapPage, moduleServer, NS],
 )
 
 
@@ -24,6 +24,7 @@ ui <- function(id) {
 #' @export
 server <- function(id) {
   moduleServer(id, function(input, output, session) {
-    basic_app$server("basic_app")
+    data <- readRDS("app/data/pet_data.rds")
+    basic_app$server("basic_app", data)
   })
 }

@@ -16,9 +16,3 @@ if (nzchar(system.file(package = "box.lsp"))) {
     )
   )
 }
-
-# autorefresh shiny app
-options(shiny.autoreload = TRUE)
-
-# Load shiny so runApp() works faster
-require(shiny)
