@@ -1,14 +1,14 @@
 box::use(
-  shiny[HTML],
-  bslib[bs_theme, bs_add_rules],
+  bslib[bs_add_rules, bs_theme],
+  glue[glue],
   sass[sass_file],
-  glue[glue]
+  shiny[HTML],
 )
 
 # Load bslib basic theme and primary variable
 #' @export
-my_theme <- bslib::bs_theme(primary = "#FF6622") |> 
-  bslib::bs_add_rules(sass::sass_file("app/styles/main.scss"))
+my_theme <- bs_theme(primary = "#FF6622") |>
+  bs_add_rules(sass_file("app/styles/main.scss"))
 
 # Font type
 #' @export
@@ -16,7 +16,9 @@ font_parkinsans <- function() {
   HTML('
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Parkinsans:wght@300..800&display=swap" rel="stylesheet">')
+<link href=
+"https://fonts.googleapis.com/css2?family=Parkinsans:wght@300..800&display=swap"
+rel="stylesheet">')
 }
 
 # Favicon
@@ -32,8 +34,8 @@ load_favicon <- function() {
 
 # textInput with full width
 #' @export
-textInput_max_width <- function(id) {
-  HTML(glue::glue('
+textinput_max_width <- function(id) {
+  HTML(glue('
 <div class="form-group shiny-input-container w-100">
   <label class="control-label" id="{id}-label" for="{id}">Pet name</label>
   <input id="{id}" type="text" class="shiny-input-text form-control" value=""/>

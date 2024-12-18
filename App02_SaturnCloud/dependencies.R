@@ -2,6 +2,7 @@
 library(bslib)
 library(dplyr)
 library(ggplot2)
+library(reactlog)
 library(rhino)
 library(stringr)
 library(treesitter)
